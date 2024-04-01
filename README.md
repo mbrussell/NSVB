@@ -3,6 +3,10 @@
 
 Files and R code to predict tree volume, biomass, and carbon using the US' [National Scale Volume Biomass (NSVB) models](https://www.fs.usda.gov/research/programs/fia/nsvb).
 
+* **nsvb.Rmd** contains R functions to determine NSVB attibutes.
+* **apply_nsvb** contains four example trees presented in Westfall et al. 2023 and applies NSVB equations to them.
+* **westfall gtr** folder contains appropriate parameter files by ecological division and species.
+
 R code uses the approach presented in [Westfall et al. 2023](https://www.fs.usda.gov/research/treesearch/66998) to predict a suite of individual tree attributes depicting the volume, biomass, and carbon stored in trees.  The following variables are a crosswalk between what's presented in the Westfall et al. 2023 examples and the associated variables recorded in the [Forest Inventory and Analysis database (FIADB)](https://www.fs.usda.gov/research/programs/fia):
 
 | Westfall abbr      | FIADB abbr | Definition      | Units |

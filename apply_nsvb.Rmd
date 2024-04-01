@@ -1,0 +1,63 @@
+---
+title: "Apply NSVB equations to four example trees presented in Westfall et al. 2023"
+author: "Matt Russell"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(knitr)
+```
+
+```{r}
+# An example data set, using  the trees from Westfall et al. 2023 (Examples 1-4)
+# Last three columns are the volume, biomass, and carbon values presented in Westfall et al. 2023.
+# Found on pages 15-50
+
+tree <- tribble(
+  ~EXAMPLE, ~DIVISION, ~PROVINCE, ~STDORGCD, ~SPCD, ~DIA, ~HT, ~ACTUALHT, ~CR, ~CULL, ~DECAYCD, ~STATUSCD, ~Westfall_vol, ~Westfall_bio,  ~Westfall_c,
+  1, "240",   NA,    NA, 202, 20,  110, 110, NA,  0, 0, 1, 88.4522, 3154.553, 1626.474,# Doug-fir
+  2, "M210",  NA,    NA, 316, 11.1, 38,  38, NA,  3, 0, 1, 9.42711, 528.13, 256.53, # red maple
+  3, "240",  "M242", NA, 631, 11.3, 28,  21, NA, 10, 2, 2, 7.2831, 241.96, 114.45, # tan oak (standing dead tree)
+  4, "M220",  NA,    NA, 802, 18.1, 65,  59, 30,  2, 0, 1, 42.277, 2096.669, 1039.31 # white oak
+  )
+
+my_wd <- "my/directory"
+
+run_nsvb <- paste0(my_wd, "/nsvb.Rmd")
+
+source(knitr::purl(run_nsvb, quiet = T))
+```
+
+```{r}
+# Print some of the data
+head(tree)
+
+# Make sure volume estimates agree from Westfall and these calcs:
+
+p_vol <- tree |> 
+  ggplot(aes(x = Westfall_vol, y = V_tot_ib_Gross)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, col = "red") +
+labs(x = "Westfall volume (cu ft)",
+     y = "NSVB volume, these calcs (cu ft)",)
+p_vol
+
+p_bio <- tree |> 
+  ggplot(aes(x = Westfall_c, y = C)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, col = "red") +
+labs(x = "Westfall biomass (lbs)",
+     y = "NSVB biomass, these calcs (lbs)",)
+p_bio
+
+p_c <- tree |> 
+  ggplot(aes(x = Westfall_c, y = C)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, col = "red") +
+labs(x = "Westfall carbon (lbs)",
+     y = "NSVB carbon, these calcs (lbs)",)
+p_c
+```
+
