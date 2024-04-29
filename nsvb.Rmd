@@ -37,13 +37,13 @@ get_nsvb <- function(MODEL, SPCD, DIA, HT,
 
   # Segmented model
     }else if(MODEL == 2 & SPCD < 300 & DIA < 9){
-      nsvb = a*DIA**b1*HT**c
+      nsvb = a*DIA**b*HT**c
    }else if(MODEL == 2 & SPCD < 300 & DIA >= 9){
-     nsvb = a*9**(b-b1)*DIA**b1*HT**c
+     nsvb = a*(9**(b-b1))*DIA**b1*HT**c
    }else if(MODEL == 2 & SPCD >= 300 & DIA < 11){
-     nsvb = a*DIA**b1*HT**c
+     nsvb = a*DIA**b*HT**c
    }else if(MODEL == 2 & SPCD >= 300 & DIA >= 11){
-     nsvb = a*11**(b-b1)*DIA**b1*HT**c
+     nsvb = a*(11**(b-b1))*DIA**b1*HT**c
      
   # Continuously variable model
    }else if(MODEL == 3){
@@ -62,6 +62,7 @@ get_nsvb <- function(MODEL, SPCD, DIA, HT,
    }
   return(nsvb)
 }
+
 
 # Equation to estimate merchantable height to any top diameter 
 # (Eqn 7 in Westfall et al. 2023)
