@@ -1,5 +1,5 @@
 # NSVB
-<img src="https://www.fs.usda.gov/research/sites/default/files/styles/large/public/2023-09/wo-fia_tree_model_photos.png?itok=W6gO9iLy" align="left" alt="*USDA Forest Service*">
+<img src="https://research.fs.usda.gov/sites/default/files/styles/large/public/2023-09/wo-fia_tree_model_photos.png?itok=W6gO9iLy" align="left" alt="*USDA Forest Service*">
 
 Files and R code to predict tree volume, biomass, and carbon using the US' [National Scale Volume Biomass (NSVB) models](https://www.fs.usda.gov/research/programs/fia/nsvb).
 
