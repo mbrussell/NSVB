@@ -15,7 +15,9 @@ tree <- tribble(
   4, "M220",  NA,    NA, 802, 18.1, 65,  59, 30,  2, 0, 1, 42.277, 2096.669, 1039.31 # white oak
 )
 
-my_wd <- "my/directory"
+# Set to the path of your local NSVB repository, e.g.:
+# my_wd <- "C:/Users/johnb/Documents/GitHub/NSVB"
+my_wd <- getwd()
 
 run_nsvb <- paste0(my_wd, "/nsvb.Rmd")
 

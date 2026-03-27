@@ -13,8 +13,9 @@ library(tidyverse)
 ```
 
 ```{r}
-# Set working directory
-setwd("my/directory")
+# Set working directory to the location of this file
+# Update this path to match your local setup, e.g.:
+# setwd("C:/Users/johnb/Documents/GitHub/NSVB")
 ```
 
 ```{r}
