@@ -6,25 +6,25 @@ library(tidyverse)
 # An example data set, using  the trees from Westfall et al. 2023 (Examples 1-4)
 # Last three columns are the volume, biomass, and carbon values presented in Westfall et al. 2023.
 # Found on pages 15-50
-
 tree <- tribble(
-  ~EXAMPLE, ~DIVISION, ~PROVINCE, ~STDORGCD, ~SPCD, ~DIA, ~HT, ~ACTUALHT, ~CR, ~CULL, ~DECAYCD, ~STATUSCD, ~Westfall_vol, ~Westfall_bio,  ~Westfall_c,
-  1, "240",   NA,    NA, 202, 20,  110, 110, NA,  0, 0, 1, 88.4522, 3154.553, 1626.474,# Doug-fir
-  2, "M210",  NA,    NA, 316, 11.1, 38,  38, NA,  3, 0, 1, 9.42711, 528.13, 256.53, # red maple
-  3, "240",  "M242", NA, 631, 11.3, 28,  21, NA, 10, 2, 2, 7.2831, 241.96, 114.45, # tan oak (standing dead tree)
-  4, "M220",  NA,    NA, 802, 18.1, 65,  59, 30,  2, 0, 1, 42.277, 2096.669, 1039.31 # white oak
+  ~EXAMPLE, ~DIVISION, ~PROVINCE, ~STDORGCD, ~SPCD,  ~DIA,  ~HT, ~ACTUALHT,  ~CR, ~CULL, ~DECAYCD, ~STATUSCD, ~Westfall_vol, ~Westfall_bio, ~Westfall_c,
+        1,     "240",        NA,        NA,   202,  20.0,  110,       110,   NA,     0,        0,         1,      88.4522,      3154.553,    1626.474, # Doug-fir
+        2,    "M210",        NA,        NA,   316,  11.1,   38,        38,   NA,     3,        0,         1,       9.4271,       528.130,     256.530, # red maple
+        3,     "240",    "M242",        NA,   631,  11.3,   28,        21,   NA,    10,        2,         2,       7.2831,       241.960,     114.450, # tan oak (standing dead tree)
+        4,    "M220",        NA,        NA,   802,  18.1,   65,        59,   30,     2,        0,         1,      42.2770,      2096.669,    1039.310, # white oak
+        5,     "211",        NA,        NA,   12,    12,    35,        35,   NA,     0,        0,         1,            0,             0,           0  # Balsam fir
 )
-
 # Set to the path of your local NSVB repository, e.g.:
-# my_wd <- "C:/Users/johnb/Documents/GitHub/NSVB"
-my_wd <- getwd()
+my_wd <- "C:/Users/johnb/Documents/GitHub/NSVB"
 
 run_nsvb <- paste0(my_wd, "/nsvb.Rmd")
 
-source(knitr::purl(run_nsvb, quiet = TRUE))
+source(knitr::purl(run_nsvb, quiet = FALSE))
 
 # Print some of the data
 head(tree)
+
+tree$C
 
 # Make sure volume estimates agree from Westfall and these calcs:
 

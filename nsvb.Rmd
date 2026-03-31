@@ -15,12 +15,12 @@ library(tidyverse)
 ```{r}
 # Set working directory to the location of this file
 # Update this path to match your local setup, e.g.:
-# setwd("C:/Users/johnb/Documents/GitHub/NSVB")
+DATA_FOLDER = "C:/Users/johnb/Documents/GitHub/NSVB/supplemental_tables"
 ```
 
 ```{r}
 # Species reference table
-ref_spp <- read_csv("REF_SPECIES.csv") |> 
+ref_spp <- read_csv(paste0(DATA_FOLDER, "/REF_SPECIES.csv")) |> 
   select(SPCD, JENKINS_SPGRPCD) |> 
   filter(SPCD <= 999)
 ```
@@ -95,9 +95,9 @@ get_V_ratio <- function(h1, HT, alpha, beta){
 ```{r}
 # 1. Gross total stem wood volume, inside bark:
 
-vol_ib <- read_csv("Table S1a_volib_coefs_spcd.csv") |> 
+vol_ib <- read_csv(paste0(DATA_FOLDER, "/Table S1a_volib_coefs_spcd.csv")) |> 
   rename(MODEL = model)
-vol_ib_jenkins <- read_csv("Table S1b_volib_coefs_jenkins.csv") |> 
+vol_ib_jenkins <- read_csv(paste0(DATA_FOLDER, "/Table S1b_volib_coefs_jenkins.csv")) |> 
   rename(MODEL = model)
 
 vol_division <- vol_ib |> 
@@ -164,9 +164,9 @@ tree <- inner_join(tree, spp_vol_ib_all) |>
 ```{r}
 # 2. Gross total stem bark volume
 
-vol_bark <- read_csv("Table S2a_volbk_coefs_spcd.csv") |> 
+vol_bark <- read_csv(paste0(DATA_FOLDER, "/Table S2a_volbk_coefs_spcd.csv")) |> 
   rename(MODEL = model)
-vol_bark_jenkins <- read_csv("Table S2b_volbk_coefs_jenkins.csv") |> 
+vol_bark_jenkins <- read_csv(paste0(DATA_FOLDER, "/Table S2b_volbk_coefs_jenkins.csv")) |> 
   rename(MODEL = model)
 
 vol_division <- vol_bark |> 
@@ -236,15 +236,15 @@ tree <- inner_join(tree, spp_vol_bark_all) |>
 ```{r}
 # 4. Estimate height to merchantable top diameter (4.0-inch)
 
-vol_ob1 <- read_csv("Table S3a_volob_coefs_spcd.csv") |> 
+vol_ob1 <- read_csv(paste0(DATA_FOLDER, "/Table S3a_volob_coefs_spcd.csv")) |> 
   rename(MODEL_ob = model)
-vol_ob2 <- read_csv("Table S4a_rcumob_coefs_spcd.csv") |> 
+vol_ob2 <- read_csv(paste0(DATA_FOLDER, "/Table S4a_rcumob_coefs_spcd.csv")) |> 
   rename(MODEL_rcumob = model)
 vol_ob <- inner_join(vol_ob1, vol_ob2, by = c("SPCD", "DIVISION", "STDORGCD"))
 
-vol_ob1_jenkins <- read_csv("Table S3b_volob_coefs_jenkins.csv") |> 
+vol_ob1_jenkins <- read_csv(paste0(DATA_FOLDER, "/Table S3b_volob_coefs_jenkins.csv")) |> 
   rename(MODEL_ob = model)
-vol_ob2_jenkins <- read_csv("Table S4b_rcumob_coefs_jenkins.csv") |> 
+vol_ob2_jenkins <- read_csv(paste0(DATA_FOLDER, "/Table S4b_rcumob_coefs_jenkins.csv")) |> 
   rename(MODEL_rcumob = model)
 vol_ob_jenkins <- inner_join(vol_ob1_jenkins, vol_ob2_jenkins, 
                              by = c("JENKINS_SPGRPCD"))
@@ -310,9 +310,9 @@ tree <- inner_join(tree, spp_vol_ob_all) |>
 ```{r}
 # 5. Estimate merchantable wood volume – volume ratios to stump & merchantable top
 
-vol_ratio <- read_csv("Table S5a_rcumib_coefs_spcd.csv") |> 
+vol_ratio <- read_csv(paste0(DATA_FOLDER, "/Table S5a_rcumib_coefs_spcd.csv")) |> 
   rename(MODEL = model)
-vol_ratio_jenkins <- read_csv("Table S5b_rcumib_coefs_jenkins.csv") |> 
+vol_ratio_jenkins <- read_csv(paste0(DATA_FOLDER, "/Table S5b_rcumib_coefs_jenkins.csv")) |> 
   rename(MODEL = model)
 
 vol_division <- vol_ratio |> 
@@ -474,7 +474,7 @@ tree <- tree |>
 ```
 
 ```{r}
-wdsg <- read_csv("REF_SPECIES.csv") |> 
+wdsg <- read_csv(paste0(DATA_FOLDER, "/REF_SPECIES.csv")) |> 
   select(SPCD, SFTWD_HRDWD, WOOD_SPGR_GREENVOL_DRYWT) |> 
   filter(SPCD <= 999) |> 
   rename(WDSG = WOOD_SPGR_GREENVOL_DRYWT)
@@ -520,9 +520,9 @@ tree <- inner_join(tree, dead, by = c("SFTWD_HRDWD", "DECAYCD")) |>
 ```{r}
 # Estimate total stem bark weight
 
-bark_wt <- read_csv("Table S6a_bark_biomass_coefs_spcd.csv") |> 
+bark_wt <- read_csv(paste0(DATA_FOLDER, "/Table S6a_bark_biomass_coefs_spcd.csv")) |> 
   rename(MODEL = model)
-bark_wt_jenkins <- read_csv("Table S6b_bark_biomass_coefs_jenkins.csv") |> 
+bark_wt_jenkins <- read_csv(paste0(DATA_FOLDER, "/Table S6b_bark_biomass_coefs_jenkins.csv")) |> 
   rename(MODEL = model) |> 
   mutate(b1 = NA)
 
@@ -585,9 +585,9 @@ tree <- inner_join(tree, spp_bark_wt_all) |>
 ```{r}
 # Estimate branch weight
 
-branch_wt <- read_csv("Table S7a_branch_biomass_coefs_spcd.csv") |> 
+branch_wt <- read_csv(paste0(DATA_FOLDER, "/Table S7a_branch_biomass_coefs_spcd.csv")) |> 
   rename(MODEL = model)
-branch_wt_jenkins <- read_csv("Table S7b_branch_biomass_coefs_jenkins.csv") |> 
+branch_wt_jenkins <- read_csv(paste0(DATA_FOLDER, "/Table S7b_branch_biomass_coefs_jenkins.csv")) |> 
   rename(MODEL = model) |> 
   mutate(b1 = NA)
 
@@ -619,7 +619,7 @@ spp_branch_wt <- rbind(spp_branch_division, spp_branch_division_na) |>
   arrange(SPCD, desc(DIVISION), STDORGCD) 
 
 # Species reference table
-ref_spp <- read_csv("REF_SPECIES.csv") |> 
+ref_spp <- read_csv(paste0(DATA_FOLDER, "/REF_SPECIES.csv")) |> 
   select(SPCD, JENKINS_SPGRPCD, WOOD_SPGR_GREENVOL_DRYWT) |> 
   filter(SPCD <= 999) |> 
   rename(WDSG = WOOD_SPGR_GREENVOL_DRYWT)
@@ -667,14 +667,14 @@ tree <- inner_join(tree, spp_branch_wt_all,
 # Ecological division is mislabeled in Table S11_mean_crprop.csv. 
 # It should be ecological province (see email to J. Westfall on 2/23/2024)
 
-cr_prop <- read_csv("Table S11_mean_crprop.csv") |> 
+cr_prop <- read_csv(paste0(DATA_FOLDER, "/Table S11_mean_crprop.csv")) |> 
   rename(SFTWD_HRDWD = `HWD Y/N`,
          MEAN_CR = `Mean CR`,
          PROVINCE = Division) |> 
   mutate(SFTWD_HRDWD = ifelse(SFTWD_HRDWD == "Y", "H", "S")) |> 
   select(-(Nobs))
 
-eco_div_prov <- read_csv("eco_div_prov.csv") |> 
+eco_div_prov <- read_csv(paste0(DATA_FOLDER, "/eco_div_prov.csv")) |> 
   rename(DIVISION = eco_division,
          PROVINCE = eco_province)
 
@@ -708,9 +708,9 @@ tree <- left_join(tree, cr_prop2, by = c("PROVINCE", "SFTWD_HRDWD")) |>
 ```{r}
 # 11. estimate total aboveground biomass
 
-agb <- read_csv("Table S8a_total_biomass_coefs_spcd.csv") |> 
+agb <- read_csv(paste0(DATA_FOLDER, "/Table S8a_total_biomass_coefs_spcd.csv")) |> 
   rename(MODEL = model)
-agb_jenkins <- read_csv("Table S8b_total_biomass_coefs_jenkins.csv") |> 
+agb_jenkins <- read_csv(paste0(DATA_FOLDER, "/Table S8b_total_biomass_coefs_jenkins.csv")) |> 
   rename(MODEL = model)
 
 agb_division <- agb |> 
@@ -741,7 +741,7 @@ spp_agb <- rbind(spp_agb_division, spp_agb_division_na) |>
   arrange(SPCD, desc(DIVISION), STDORGCD) 
 
 # Species reference table
-ref_spp <- read_csv("REF_SPECIES.csv") |> 
+ref_spp <- read_csv(paste0(DATA_FOLDER, "/REF_SPECIES.csv")) |> 
   select(SPCD, JENKINS_SPGRPCD, WOOD_SPGR_GREENVOL_DRYWT) |> 
   filter(SPCD <= 999)|> 
   rename(WDSG = WOOD_SPGR_GREENVOL_DRYWT)
@@ -791,9 +791,9 @@ tree <- inner_join(tree, spp_agb_all) |>
 ```{r}
 # 11. estimate foliage biomass
 
-foliage <- read_csv("Table S9a_foliage_coefs_spcd.csv") |> 
+foliage <- read_csv(paste0(DATA_FOLDER, "/Table S9a_foliage_coefs_spcd.csv")) |> 
   rename(MODEL = model)
-foliage_jenkins <- read_csv("Table S9b_foliage_coefs_jenkins.csv") |> 
+foliage_jenkins <- read_csv(paste0(DATA_FOLDER, "/Table S9b_foliage_coefs_jenkins.csv")) |> 
   rename(MODEL = equation)
 
 foliage_division <- foliage |> 
@@ -824,7 +824,7 @@ spp_foliage <- rbind(spp_foliage_division, spp_foliage_division_na) |>
   arrange(SPCD, desc(DIVISION), STDORGCD) 
 
 # Species reference table
-ref_spp <- read_csv("REF_SPECIES.csv") |> 
+ref_spp <- read_csv(paste0(DATA_FOLDER, "/REF_SPECIES.csv")) |> 
   select(SPCD, JENKINS_SPGRPCD) |> 
   filter(SPCD <= 999)
 
@@ -884,12 +884,12 @@ tree <- tree |>
 
 ```{r}
 # Carbon fractions
-spp_live <- read_csv("Table S10a_fia_wood_c_frac_live.csv") |> 
+spp_live <- read_csv(paste0(DATA_FOLDER, "/Table S10a_fia_wood_c_frac_live.csv")) |> 
   select(SPCD, fia.wood.c) |> 
   rename(CF = fia.wood.c) |> 
   filter(SPCD <= 999)
 
-spp_dead <- read_csv("Table S10b_fia_wood_c_frac_dead.csv") |> 
+spp_dead <- read_csv(paste0(DATA_FOLDER, "/Table S10b_fia_wood_c_frac_dead.csv")) |> 
   mutate(SFTWD_HRDWD = ifelse(`S/H` == "Hardwood", "H", "S")) |> 
   rename(DECAYCD = `Decay code`) |> 
     select(-`S/H`) |> 
