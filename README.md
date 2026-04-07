@@ -7,7 +7,23 @@ Files and R code to predict tree volume, biomass, and carbon using the US' [Nati
 * **apply_nsvb** contains four example trees presented in Westfall et al. 2023 and applies NSVB equations to them.
 * **westfall gtr** folder contains appropriate parameter files by ecological division and species.
 
-R code uses the approach presented in [Westfall et al. 2023](https://www.fs.usda.gov/research/treesearch/66998) to predict a suite of individual tree attributes depicting the volume, biomass, and carbon stored in trees.  The following variables are a crosswalk between what's presented in the Westfall et al. 2023 examples and the associated variables recorded in the [Forest Inventory and Analysis database (FIADB)](https://www.fs.usda.gov/research/programs/fia):
+## Overview
+
+R code uses the approach presented in [Westfall et al. 2023](https://www.fs.usda.gov/research/treesearch/66998) to predict a suite of individual tree attributes depicting the volume, biomass, and carbon stored in trees.
+
+The primary function, `get_nsvb`, implements Equations 1–5 from Westfall et al. 2023 to estimate tree volume and biomass attributes from individual tree measurements. It accepts a tree's species code (`SPCD`), diameter at breast height (`DIA`), total height (`HT`), fitted model coefficients, and wood specific gravity (`WDSG`), then applies one of five allometric model forms depending on the `MODEL` parameter:
+
+| Model | Form |
+| --- | --- |
+| 1 | Schumacher-Hall |
+| 2 | Segmented (breakpoint at 9 in. DBH for softwoods, 11 in. for hardwoods) |
+| 3 | Continuously variable |
+| 4 | Modified Wiley |
+| 5 | Modified Schumacher-Hall (incorporates wood specific gravity) |
+
+Supporting functions `get_hm` and `get_V_ratio` estimate merchantable height to any specified top diameter and the proportion of stem volume below a given height, respectively (Equations 6–7 in Westfall et al. 2023). Together these functions drive calculation of the full suite of volume, biomass, and carbon variables that crosswalk to the [Forest Inventory and Analysis database (FIADB)](https://www.fs.usda.gov/research/programs/fia).
+
+The following variables are a crosswalk between what's presented in the Westfall et al. 2023 examples and the associated variables recorded in the FIADB:
 
 | Westfall abbr      | FIADB abbr | Definition      | Units |
 | ----------- | ----------- | ----------- | ----------- |
